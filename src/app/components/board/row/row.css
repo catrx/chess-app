@@ -1,0 +1,20 @@
+.row {
+    display: flex;
+}
+
+.row>* {
+    flex: 1 1 12.5%;
+    position: relative;
+    height: 0;
+    padding-bottom: 12.5%;
+}
+
+.row:nth-of-type(even)
+.box:nth-of-type(even) {
+    background-color: white;
+}
+
+.row:nth-of-type(even)
+.box:nth-of-type(odd) {
+    background-color: lightgreen;
+}

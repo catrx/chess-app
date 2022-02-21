@@ -1,0 +1,7 @@
+.box:nth-of-type(even) {
+    background-color: lightgreen;
+}
+
+.box:nth-of-type(odd) {
+    background-color: white;
+}
