@@ -11,10 +11,10 @@
 
 .row:nth-of-type(even)
 .box:nth-of-type(even) {
-    background-color: white;
+    background-color: #ece7ef;
 }
 
 .row:nth-of-type(even)
 .box:nth-of-type(odd) {
-    background-color: lightgreen;
+    background-color: #8194d7;
 }
