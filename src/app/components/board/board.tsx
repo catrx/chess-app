@@ -1,14 +1,25 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './board.css'
 import Row from "./row/row";
+import {RootStateOrAny, useDispatch, useSelector} from "react-redux";
+import {getPiecesPosition, movePiece} from "../../actions/pieces_action";
 
 const NUMBERS: number[] = [8, 7, 6, 5, 4, 3, 2, 1]
 
+
+
 const Board = () => {
+    const dispatch = useDispatch();
+    const { piecesPosition } = useSelector((state: RootStateOrAny) => state.pieces)
+
+    useEffect(() => {
+        getPiecesPosition()(dispatch)
+        movePiece({A1: 'WP4'}, {A1: 'BP4'})(dispatch)
+    }, [])
     return(
         <div className="board">
             {NUMBERS.map(n => (
-                    <Row num={n} />
+                    <Row key={n} num={n} piecesPosition={piecesPosition} />
                 ))
             }
         </div>
