@@ -14,8 +14,9 @@ const Board = () => {
 
     useEffect(() => {
         getPiecesPosition()(dispatch)
-        movePiece({A1: 'WP4'}, {A1: 'BP4'})(dispatch)
+        movePiece('WQ', 'D6')(dispatch)
     }, [])
+
     return(
         <div className="board">
             {NUMBERS.map(n => (

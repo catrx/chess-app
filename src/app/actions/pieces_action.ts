@@ -7,12 +7,12 @@ export const getPiecesPosition = () => (dispatch: Dispatch<Action>) => {
     })
 }
 
-export const movePiece = (oldPosition: Record<any, string>, newPosition: Record<any, string>) => (dispatch: Dispatch<Action>) => {
+export const movePiece = (piece: string, newPosition: string) => (dispatch: Dispatch<Action>) => {
     return dispatch(
         {
             type: MOVE_PIECE,
-            oldPosition,
-            newPosition
+            newPosition,
+            piece
         }
     )
 }

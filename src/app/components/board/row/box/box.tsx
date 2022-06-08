@@ -9,13 +9,15 @@ interface IBoxProps {
 }
 
 
-const Box: React.FunctionComponent<IBoxProps> = ({ letter, num, piecesPositions }) => {
+const Box: React.FunctionComponent<IBoxProps> = ({ letter, num, piecesPosition }) => {
 
     const piece = useMemo(() => {
         const position: string = letter + num
-        const element = piecesPosition.find((p: any) => p[position])
-        return element ? element[position] : null
-    },[letter, num])
+        const element = piecesPosition.find((p: any) => p.position === position)
+        return element ? element.piece : null
+    },[letter, num, piecesPosition])
+
+    console.log(piece)
 
 
     return <div className="box"><Piece piece={piece} /></div>
