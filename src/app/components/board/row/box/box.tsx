@@ -1,6 +1,8 @@
-import React, { useMemo} from "react";
+import React, {useCallback, useMemo} from "react";
 import './box.css';
 import Piece from "./piece/piece";
+import {RootStateOrAny, useDispatch, useSelector} from "react-redux";
+import {movePiece, selectPiece} from "../../../../actions/pieces_action";
 
 interface IBoxProps {
     letter: string,
@@ -10,6 +12,8 @@ interface IBoxProps {
 
 
 const Box: React.FunctionComponent<IBoxProps> = ({ letter, num, piecesPosition }) => {
+    const dispatch = useDispatch();
+    const { selectedPiece, turn } = useSelector((state: RootStateOrAny) => state.pieces)
 
     const piece = useMemo(() => {
         const position: string = letter + num
@@ -17,10 +21,19 @@ const Box: React.FunctionComponent<IBoxProps> = ({ letter, num, piecesPosition }
         return element ? element.piece : null
     },[letter, num, piecesPosition])
 
-    console.log(piece)
+    const handleClick = useCallback(() => {
+        if(piece && piece[0] === turn) {
+            selectPiece(piece)(dispatch)
+        }
+        if(selectedPiece) {
+            movePiece(selectedPiece, letter + num)(dispatch)
+            selectPiece(null)(dispatch)
+        }
+    }, [piece, letter, num, selectedPiece, dispatch, turn])
 
 
-    return <div className="box"><Piece piece={piece} /></div>
+
+    return <div className={`box ${piece && selectedPiece === piece? 'active': ''}`} onClick={handleClick}><Piece piece={piece} /></div>
 }
 
 export default Box;

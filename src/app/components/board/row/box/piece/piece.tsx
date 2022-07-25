@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useCallback} from "react"
 import {MAP_PIECE} from "./map-piece";
 import './piece.css';
 

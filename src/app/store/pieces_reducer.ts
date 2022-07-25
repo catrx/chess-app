@@ -1,10 +1,11 @@
-import {GET_PIECES_POSITION, MOVE_PIECE} from "../actions/action_types";
+import {GET_PIECES_POSITION, MOVE_PIECE, SELECT_PIECE} from "../actions/action_types";
 
 interface IAction {
     type: string;
-    piecesPosition: Record<any, string>[],
     piece: string,
-    newPosition: string
+    newPosition: string,
+    selectedPiece: string | null,
+    turn: string,
 }
 
 const initialState = {
@@ -138,6 +139,8 @@ const initialState = {
             position: 'H7',
         },
     ],
+    selectedPiece: null,
+    turn: 'W'
 };
 
 export const pieces = (state = initialState, action: IAction) => {
@@ -147,15 +150,21 @@ export const pieces = (state = initialState, action: IAction) => {
                 ...state,
                 piecesPosition: state.piecesPosition
             };
-        case MOVE_PIECE:
-            let currentPositions = state.piecesPosition;
-            const index = currentPositions.findIndex((p: any) => p.piece == action.piece)
-            currentPositions.splice(index, 1)
-            console.log(index)
+        case SELECT_PIECE:
             return {
                 ...state,
+                selectedPiece: action.selectedPiece
+            };
+        case MOVE_PIECE:
+            if(isIllegal(action, state.piecesPosition)) {
+                return state;
+            }
+            const newPositions = getNewCurrentPosition(action, state.piecesPosition)
+            return {
+                ...state,
+                turn: state.turn === 'W'? 'B':'W',
                 piecesPosition: [
-                    ...currentPositions,
+                    ...newPositions,
                     {
                         piece: action.piece,
                         position: action.newPosition
@@ -166,3 +175,25 @@ export const pieces = (state = initialState, action: IAction) => {
             return state;
     }
 };
+
+const isIllegal = (action: IAction, currentPositions: Array<any>) => {
+    const newIndexPosition = currentPositions.findIndex((p: any) => p.position == action.newPosition);
+
+    if(newIndexPosition > -1 && currentPositions[newIndexPosition].piece[0] === action.piece[0]) {
+        return true
+    }
+    return false;
+}
+
+const getNewCurrentPosition = (action: IAction, currentPositions: Array<any>) => {
+    const oldIndexPosition = currentPositions.findIndex((p: any) => p.piece == action.piece);
+
+    currentPositions.splice(oldIndexPosition, 1);
+
+    const newIndexPosition = currentPositions.findIndex((p: any) => p.position == action.newPosition);
+
+    if(newIndexPosition > -1) {
+        currentPositions.splice(newIndexPosition, 1);
+    }
+    return currentPositions;
+}

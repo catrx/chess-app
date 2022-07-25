@@ -1,2 +1,3 @@
 export const GET_PIECES_POSITION = "GET_PIECES_POSITION";
 export const MOVE_PIECE = "MOVE_PIECE";
+export const SELECT_PIECE = "SELECT_PIECE";

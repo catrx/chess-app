@@ -5,3 +5,7 @@
 .box:nth-of-type(odd) {
     background-color: #ece7ef;
 }
+
+.active {
+    box-shadow: 0 0 10px white;
+}
